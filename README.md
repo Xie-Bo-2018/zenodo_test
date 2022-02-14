@@ -19,8 +19,7 @@ mv sequences.fa path/to/snpEff/data/GRCh38_ALT_PRSS/
 ```
 vim snpEff.config
 ```
-
-4、Add the following lines (you are editing snpEff.config):
+Add the following lines (you are editing snpEff.config):
 ```
 # GRCh38_ALT_PRSS, GENCODE_v39 GRCh38_ALT_PRSS
 GRCh38_ALT_PRSS.genome : path/to/snpEff/data//GRCh38_ALT_PRSS/sequences.fa
