@@ -11,7 +11,6 @@ mv genes.gff.gz path/to/snpEff/data/GRCh38_ALT_PRSS/
 
 2. Add the sequence to the config file:
 ```
-mkdir path/to/snpEff/data/GRCh38_ALT_PRSS
 mv sequences.fa path/to/snpEff/data/GRCh38_ALT_PRSS/
 ```
 
