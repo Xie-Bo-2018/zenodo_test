@@ -123,5 +123,5 @@ python get_NH1_medically_genes.py NH1.gencode.v34.gff
 bcftools view -R NH1.medically_gene.bed ${HX1_vcf} |bgzip > ${HX1_medically_gene_vcf} &
 python snpEff_config.py /path/to/snpEff/ /path/to/data/
 java -Xmx4g -jar snpEff.jar -v NH1 ${HX1_medically_gene_vcf} -c /path/to/snpEff.config \
--datadir /path/to/data/  | bgzip 1> ${HX1_medically_gene_snpEff_vcf} 
+-datadir /path/to/data/ | bgzip 1> ${HX1_medically_gene_snpEff_vcf} 
 ```
