@@ -106,7 +106,7 @@ bgzip NH1.HX1.vcf;tabix -p vcf NH1.HX1.vcf.gz
 base_vcf=NH1.HX1.vcf.gz
 query_vcf=HX1.genomewide.hc.filtered.vcf.gz
 rtg format -o NH1.sdf ${ref_NH1_fa}
-rtg vcfeval -b base_vcf -c query_vcf -o output -t NH1.sdf
+rtg vcfeval -b ${base_vcf} -c ${query_vcf} -o output -t NH1.sdf
 ```
 
 
