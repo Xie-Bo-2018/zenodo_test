@@ -107,3 +107,19 @@ query_vcf=HX1.genomewide.hc.mixed.filtered.vcf.gz
 rtg format -o NH1.sdf ${ref_NH1_fa}
 rtg vcfeval -b base_vcf -c query_vcf -o output -t NH1.sdf
 ```
+
+
+##########liftoff and snpeff##########
+```
+gff3_db=gencode.v34.annotation.gff3_db
+ref_NH1_fa=GWHAAAS00000000.genome.fasta
+ref_GRCh38_fa=GRCh38_full_analysis_set_plus_decoy_hla.fa
+HX1_vcf=HX1.genomewide.hc.filtered.vcf.gz
+HX1_medically_gene_vcf=HX1.genomewide.hc.medically_gene.filtered.vcf.gz
+HX1_medically_gene_snpEff_vcf=HX1.genomewide.hc.medically_gene.snpEff_ann.filtered.vcf.gz
+liftoff -db ${gff3_db} -a 0.9 -s 0.9 -exclude_partial -p 10 -o NH1.gencode.v34.gff -u NH1_unmapped.txt ${ref_NH1_fa} ${ref_GRCh38_fa}
+python get_NH1_medically_genes.py NH1.gencode.v34.gff
+bcftools view -R NH1.medically_gene.bed ${HX1_vcf} |bgzip > ${HX1_medically_gene_vcf} &
+python snpEff_config.py /path/to/snpEff/ /path/to/data/
+java -Xmx4g -jar snpEff.jar -v NH1 ${HX1_medically_gene_vcf} -c /path/to/snpEff.config -datadir /path/to/data/  | bgzip 1> ${HX1_medically_gene_snpEff_vcf} 
+```
