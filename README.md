@@ -98,5 +98,6 @@ time gatk VariantFiltration -V HX1.genomewide.hc.indel.vcf.gz \
     --filter-name "Filter" -O HX1.genomewide.hc.indel.filter.vcf.gz
 time gatk MergeVcfs -I HX1.genomewide.hc.snp.filter.vcf.gz -I HX1.genomewide.hc.indel.filter.vcf.gz \
     -O HX1.genomewide.hc.filter.vcf.gz
-vcftools --gzvcf HX1.genomewide.hc.filter.vcf.gz --remove-filtered-all --recode -c |bgzip -c > HX1.genomewide.hc.mixed.filtered.vcf.gz
+vcftools --gzvcf HX1.genomewide.hc.filter.vcf.gz --remove-filtered-all \
+--recode -c |bgzip -c > HX1.genomewide.hc.mixed.filtered.vcf.gz
 ```
