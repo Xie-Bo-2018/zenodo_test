@@ -101,7 +101,8 @@ vcftools --gzvcf HX1.genomewide.hc.filter.vcf.gz --remove-filtered-all \
 
 ##########rtg-tools##########
 ```
-paftools_wgs_call.sh ${ref_NH1_fa} ${ref_HX1_fa};bgzip NH1.HX1.vcf
+paftools_wgs_call.sh ${ref_NH1_fa} ${ref_HX1_fa};
+bgzip NH1.HX1.vcf;tabix NH1.HX1.vcf.gz
 base_vcf=NH1.HX1.vcf.gz
 query_vcf=HX1.genomewide.hc.filtered.vcf.gz
 rtg format -o NH1.sdf ${ref_NH1_fa}
