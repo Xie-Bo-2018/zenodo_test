@@ -56,6 +56,7 @@ make fastq -j 15
 ```
 fastq_1=EAGLE_S1_L001_R1_001.fastq.gz
 fastq_2=EAGLE_S1_L001_R2_001.fastq.gz
+
 time bwa mem -M -t 10 -R "@RG\tID:HX1\tSM:HX1\tLB:HX1\tPU:HX1\tPL:ILLUMINA" \
 ${ref_NH1_fa} ${fastq_1} ${fastq_2} | samtools view -bS - > NH1.pe.bam
 
