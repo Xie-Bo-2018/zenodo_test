@@ -72,11 +72,10 @@ ref_chr_list=`cat $ref_fai_path | awk '{print $1}'`
 for chr in $ref_chr_list
     do
         time gatk --java-options \"-Xmx3G -XX:ParallelGCThreads=2 -Dsamjdk.compression_level=5 \" HaplotypeCaller \
-        -R ${ref_NH1_fa} -L $chr -I HX1.dedup.bam -O HX1.$chr.g.vcf.gz -ERC GVCF -G StandardAnnotation \
+        -R ${ref_NH1_fa} -ploidy 1 -L $chr -I HX1.dedup.bam -O HX1.$chr.g.vcf.gz -ERC GVCF -G StandardAnnotation \
         -G AS_StandardAnnotation -G StandardHCAnnotation --seconds-between-progress-updates 30
     done
-sh Combine_list.sh
-sh 170.JointCalling.sh
+sh Combine_list.sh;sh 170.JointCalling.sh
 for chr in $ref_chr_list
     do
         sh 170.${chr}.sh
