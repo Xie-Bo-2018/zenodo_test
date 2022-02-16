@@ -33,11 +33,9 @@ java -jar snpEff.jar build -gff3 -v GRCh38_ALT_PRSS
 
 ##########EAGLE test##########
 ```
-workdir=`pwd`
 ref_HX1_fa=hx1f4s4_3rdfixedv2.fa
 ref_HX1_fai=hx1f4s4_3rdfixedv2.fa.fai
 ref_NH1_fa=GWHAAAS00000000.genome.fasta
-ref_GRCh38_fasta=Homo_sapiens.GRCh38.dna.primary_assembly.fa
 ref_HX1_filtered_fa=hx1f4s4_3rdfixedv2.filtered.fa
 
 python Filter_HX1_fasta_contig_length.py ${ref_HX1_fa} ${ref_HX1_fai} ${ref_HX1_filtered_fa}
