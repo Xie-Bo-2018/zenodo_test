@@ -96,14 +96,14 @@ time gatk VariantFiltration -V HX1.genomewide.hc.indel.vcf.gz \
 time gatk MergeVcfs -I HX1.genomewide.hc.snp.filter.vcf.gz -I HX1.genomewide.hc.indel.filter.vcf.gz \
     -O HX1.genomewide.hc.filter.vcf.gz
 vcftools --gzvcf HX1.genomewide.hc.filter.vcf.gz --remove-filtered-all \
---recode -c |bgzip -c > HX1.genomewide.hc.mixed.filtered.vcf.gz
+--recode -c |bgzip -c > HX1.genomewide.hc.filtered.vcf.gz
 ```
 
 ##########rtg-tools##########
 ```
 paftools_wgs_call.sh ${ref_NH1_fa} ${ref_HX1_fa};bgzip NH1.HX1.vcf
 base_vcf=NH1.HX1.vcf.gz
-query_vcf=HX1.genomewide.hc.mixed.filtered.vcf.gz
+query_vcf=HX1.genomewide.hc.filtered.vcf.gz
 rtg format -o NH1.sdf ${ref_NH1_fa}
 rtg vcfeval -b base_vcf -c query_vcf -o output -t NH1.sdf
 ```
