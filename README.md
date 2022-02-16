@@ -29,3 +29,6 @@ GRCh38_ALT_PRSS.genome : path/to/snpEff/data//GRCh38_ALT_PRSS/sequences.fa
 cd /path/to/snpEff
 java -jar snpEff.jar build -gff3 -v GRCh38_ALT_PRSS
 ```
+
+
+##########EAGLE test##########
