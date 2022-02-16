@@ -66,3 +66,37 @@ time java -jar -Xmx4g -Djava.io.tmpdir=HX1/ MarkDuplicates.jar \
 rm HX1.bam
 rm HX1.pe.bam
 ```
+
+##########001-b-Use GATK software to do variants calling##########
+```
+ref_fai_path=${ref_NH1_fai}
+ref_chr_list=`cat $ref_fai_path | awk '{print $1}'`
+for chr in $ref_chr_list
+    do
+        time gatk --java-options \"-Xmx3G -XX:ParallelGCThreads=2 -Dsamjdk.compression_level=5 \" HaplotypeCaller \
+        -R ${ref_NH1_fa} -L $chr -I HX1.dedup.bam -O HX1.$chr.g.vcf.gz -ERC GVCF -G StandardAnnotation \
+        -G AS_StandardAnnotation -G StandardHCAnnotation --seconds-between-progress-updates 30
+    done
+sh Combine_list.sh
+sh 170.JointCalling.sh
+for chr in $ref_chr_list
+    do
+        sh 170.${chr}.sh
+    done
+sh 170.combine.sh
+```
+
+##########001-c-GATK hard-filtering##########
+```
+time gatk SelectVariants -select-type SNP -V HX1.genomewide.hc.vcf.gz -O HX1.genomewide.hc.snp.vcf.gz
+time gatk VariantFiltration -V HX1.genomewide.hc.snp.vcf.gz \
+    --filter-expression "QD < 2.0 || MQ < 40.0 || FS > 60.0 || SOR > 3.0" \
+    --filter-name "Filter" -O HX1.genomewide.hc.snp.filter.vcf.gz
+time gatk SelectVariants -select-type INDEL -V HX1.genomewide.hc.vcf.gz -O HX1.genomewide.hc.indel.vcf.gz
+time gatk VariantFiltration -V HX1.genomewide.hc.indel.vcf.gz \
+    --filter-expression "QD < 2.0 || FS > 200.0 || SOR > 10.0" \
+    --filter-name "Filter" -O HX1.genomewide.hc.indel.filter.vcf.gz
+time gatk MergeVcfs -I HX1.genomewide.hc.snp.filter.vcf.gz -I HX1.genomewide.hc.indel.filter.vcf.gz \
+    -O HX1.genomewide.hc.filter.vcf.gz
+vcftools --gzvcf HX1.genomewide.hc.filter.vcf.gz --remove-filtered-all --recode -c |bgzip -c > HX1.genomewide.hc.mixed.filtered.vcf.gz
+```
