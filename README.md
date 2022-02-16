@@ -56,15 +56,13 @@ make fastq -j 15
 ```
 fastq_1=EAGLE_S1_L001_R1_001.fastq.gz
 fastq_2=EAGLE_S1_L001_R2_001.fastq.gz
-
 time bwa mem -M -t 10 -R "@RG\tID:HX1\tSM:HX1\tLB:HX1\tPU:HX1\tPL:ILLUMINA" \
    ${ref_NH1_fa} ${fastq_1} ${fastq_2}  | samtools view -bS - > HX1.pe.bam
 time samtools sort -@ 5 -m 4G HX1.refNH1.pe.bam NH1; samtools index HX1.bam
 time java -jar -Xmx4g -Djava.io.tmpdir=HX1/ MarkDuplicates.jar \
 	INPUT=HX1.bam OUTPUT=HX1.dedup.bam \
 	VALIDATION_STRINGENCY=SILENT REMOVE_DUPLICATES=true METRICS_FILE=NH1.txt ASSUME_SORTED=true CREATE_INDEX=true
-rm HX1.bam
-rm HX1.pe.bam
+rm HX1.bam;rm HX1.pe.bam
 ```
 
 ##########001-b-Use GATK software to do variants calling##########
